@@ -21,5 +21,5 @@ def run(percentage_of_dead_list):
     diff = 0
     real_data = read_data()
     for i in range(len(real_data)):
-        diff += abs(read_data[i] - percentage_of_dead_list[i])
+        diff += abs(real_data[i] - percentage_of_dead_list[i])
     return diff
