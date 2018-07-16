@@ -15,16 +15,29 @@ __N_NEIGHBOR__ = 1
 random.seed = 1
 
 
-def __find(lettice):
+def __find(lettice, x, y):
     ret = 0
-    for i in range(-__N_NEIGHBOR__, __N_NEIGHBOR__):
-        for j in range(-__N_NEIGHBOR__, __N_NEIGHBOR__):
-            if (i != 0) or (j != 0):
-                try:
-                    ret += 1
-                except IndexError:
-                    pass
+    length_x = len(lettice)
+    length_y = len(lettice[0])
+    for i in range(x - __N_NEIGHBOR__, x + __N_NEIGHBOR__ + 1):
+        for j in range(y - __N_NEIGHBOR__, y + __N_NEIGHBOR__ + 1):
+            if (i >= 0) and (j >= 0):
+                if (i < length_x) and (j < length_y):
+                    if(i == x) and (j == y):
+                        pass
+                    else:
+                        if(lettice[i][j] == 1):
+                            ret += 1
     return ret
+
+
+def __cnt_dead(lettice):
+    num_dead = 0
+    for i in lettice:
+        for j in i:
+            if j == 1:
+                num_dead += 1
+    return num_dead
 
 
 def run(initial_lettice, rules, max_t):
@@ -43,22 +56,35 @@ def run(initial_lettice, rules, max_t):
 
     Returns
     -------
-    list: the lettice after the last step
+    percentage_of_dead_list: percentage of dead in each checkpoint
     """
-    temp_lettice = np.zeros(
-        shape=(len(initial_lettice), len(initial_lettice[0])),
-        dtype=np.int32
-    )
+    # temp_lettice = np.zeros(
+    #     shape=(len(initial_lettice), len(initial_lettice[0])),
+    #     dtype=np.int32
+    # )
+    lettice = initial_lettice
+    infected_list = rules[0]
+    healthy_list = rules[1]
 
-    for _ in range(max_t):
-        for i in range(len(initial_lettice)):
-            for j in range(len(initial_lettice[0])):
-                ret = __find(initial_lettice)
-                if ret > 8:
-                    temp_lettice[i][j] = 0
-                elif ret > random.randint(0, 9):
-                    temp_lettice[i][j] = 1
+    interval = int(max_t / 40)
+    max_t = 40 * interval
 
-        initial_lettice = np.copy(temp_lettice)
+    num_dead_list = []
 
-    return initial_lettice
+    for t in range(max_t):
+        for i in range(len(lettice)):
+            for j in range(len(lettice[0])):
+                ret = __find(lettice, i, j)
+                if lettice[i][j] == 0:
+                    # Healthy
+                    if random.random() > infected_list[ret]:
+                        lettice[i][j] = 1
+                else:
+                    # Infected
+                    if random.random() > healthy_list[ret]:
+                        lettice[i][j] = 0
+        if t % interval == interval - 1:
+            # Count Dead
+            num_dead_list.append(__cnt_dead(lettice))
+
+    return [p / (len(lettice) * len(lettice[0])) for p in num_dead_list]
