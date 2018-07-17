@@ -22,4 +22,8 @@ def run(percentage_of_dead_list):
     real_data = read_data()
     for i in range(len(real_data)):
         diff += abs(real_data[i] - percentage_of_dead_list[i])
-    return diff
+    return round(diff, 6)
+
+if __name__ == "__main__":
+    # Testing
+    print(run([0.1 for x in range(40)]))

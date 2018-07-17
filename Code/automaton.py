@@ -88,3 +88,7 @@ def run(initial_lettice, rules, max_t):
             num_dead_list.append(__cnt_dead(lettice))
 
     return [p / (len(lettice) * len(lettice[0])) for p in num_dead_list]
+
+if __name__ == "__main__":
+    print(__cnt_dead([[1,1], [1, 0]]))
+    print(__find([[1,1], [1, 1]], 0, 0))
