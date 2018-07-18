@@ -77,11 +77,11 @@ def run(initial_lettice, rules, max_t):
                 ret = __find(lettice, i, j)
                 if lettice[i][j] == 0:
                     # Healthy
-                    if random.random() > infected_list[ret]:
+                    if random.random() < infected_list[ret]:
                         lettice[i][j] = 1
                 else:
                     # Infected
-                    if random.random() > healthy_list[ret]:
+                    if random.random() < healthy_list[ret]:
                         lettice[i][j] = 0
         if t % interval == interval - 1:
             # Count Dead

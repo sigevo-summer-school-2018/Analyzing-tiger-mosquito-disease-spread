@@ -30,6 +30,7 @@ from deap import tools
 
 creator.create("FitnessMax", base.Fitness, weights=(-1.0,))
 creator.create("Individual", list, fitness=creator.FitnessMax)
+real_data = evaluation.read_data()
 
 toolbox = base.Toolbox()
 
@@ -63,7 +64,7 @@ def automata_fitness(individual):
     max_t = 40
 
     dead_list = automaton.run(initial_lattice, rules, max_t)
-    fitness = evaluation.run(dead_list)
+    fitness = evaluation.run(dead_list, real_data)
 
     return ([fitness])
 
