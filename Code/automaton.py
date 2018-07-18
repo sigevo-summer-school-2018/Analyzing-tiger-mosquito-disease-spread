@@ -10,6 +10,9 @@ Last updated by hwyncho on 2018.07
 """
 import numpy as np
 import random
+import visualization
+import matplotlib.pyplot as plt
+import time
 
 __N_NEIGHBOR__ = 1
 random.seed = 1
@@ -82,10 +85,17 @@ def run(initial_lettice, rules, max_t):
                         lettice[i][j] = 0
         if t % interval == interval - 1:
             # Count Dead
+            f = visualization.visualize(lettice)
+            plt.show()
+            time.sleep(10)
+            plt.close()
             num_dead_list.append(__cnt_dead(lettice))
 
     return [p / (len(lettice) * len(lettice[0])) for p in num_dead_list]
 
 if __name__ == "__main__":
-    print(__cnt_dead([[1,1], [1, 0]]))
-    print(__find([[1,1], [1, 1]], 0, 0))
+    rule = [0.05853196952085602, 0.09743265622373784, 0.02773355886430057, 0.8227126156307412, 0.35361907624358124, 0.22257027943659416, 0.3965234075968833, 0.6054585763391022, 0.7320708933391471, 0.6341923245403308, 0.972395101523802, 0.7358390785672153, 0.9510975018484704, 0.7309558815442023, 0.48499094603492515, 0.015516943518788517, 0.10269183636745804, 0.8053372027588928]
+    rule = [rule[:9], rule[9:]]
+    initial_lattice = np.zeros(shape=(40,40))
+    initial_lattice[20][20] = 1
+    run(initial_lattice,  rule, 40)
