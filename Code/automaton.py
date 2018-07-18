@@ -32,12 +32,13 @@ def __find(lettice, x, y):
 
 
 def __cnt_dead(lettice):
-    num_dead = 0
-    for i in lettice:
-        for j in i:
-            if j == 1:
-                num_dead += 1
-    return num_dead
+    return np.sum(lettice)
+    # num_dead = 0
+    # for i in lettice:
+    #     for j in i:
+    #         if j == 1:
+    #             num_dead += 1
+    # return num_dead
 
 
 def run(initial_lettice, rules, max_t):
@@ -58,10 +59,6 @@ def run(initial_lettice, rules, max_t):
     -------
     percentage_of_dead_list: percentage of dead in each checkpoint
     """
-    # temp_lettice = np.zeros(
-    #     shape=(len(initial_lettice), len(initial_lettice[0])),
-    #     dtype=np.int32
-    # )
     lettice = initial_lettice
     infected_list = rules[0]
     healthy_list = rules[1]
