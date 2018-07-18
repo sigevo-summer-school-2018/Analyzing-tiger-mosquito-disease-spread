@@ -44,7 +44,7 @@ toolbox.register("attr_float", random.uniform, 0, 1)
 #                         define 'individual' to be an individual
 #                         consisting of 100 'attr_bool' elements ('genes')
 toolbox.register("individual", tools.initRepeat, creator.Individual,
-    toolbox.attr_float, 16)
+    toolbox.attr_float, 18)
 
 # define the population to be a list of individuals
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
@@ -54,13 +54,13 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 #    return sum(individual),
 def automata_fitness(individual):
 
-    initial_lattice = np.zeros(shape=(100,100))
+    initial_lattice = np.zeros(shape=(40,40))
     initial_lattice[10][10] = 1
 
-    rules = [individual[0:8],individual[8:]]
+    rules = [individual[0:9],individual[9:]]
     #import pdb; pdb.set_trace()
 
-    max_t = 100
+    max_t = 40
 
     dead_list = automaton.run(initial_lattice, rules, max_t)
     fitness = evaluation.run(dead_list)
@@ -96,7 +96,7 @@ def main():
 
     # create an initial population of 300 individuals (where
     # each individual is a list of integers)
-    pop = toolbox.population(n=300)
+    pop = toolbox.population(n=50)
 
     # CXPB  is the probability with which two individuals
     #       are crossed
@@ -120,7 +120,7 @@ def main():
     g = 0
 
     # Begin the evolution
-    while g < 1000:
+    while g < 100:
         # A new generation
         g = g + 1
         print("-- Generation %i --" % g)

@@ -74,13 +74,9 @@ def run(initial_lettice, rules, max_t):
     for t in range(max_t):
         for i in range(len(lettice)):
             for j in range(len(lettice[0])):
-                #if i == 99:
-                    #import pdb; pdb.set_trace()
                 ret = __find(lettice, i, j)
                 if lettice[i][j] == 0:
                     # Healthy
-                    if ret > 7:
-                        print(ret)
                     if random.random() > infected_list[ret]:
                         lettice[i][j] = 1
                 else:
