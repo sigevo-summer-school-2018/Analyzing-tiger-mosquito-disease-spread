@@ -30,6 +30,7 @@ from deap import tools
 
 creator.create("FitnessMax", base.Fitness, weights=(-1.0,))
 creator.create("Individual", list, fitness=creator.FitnessMax)
+real_data = evaluation.read_data()
 
 toolbox = base.Toolbox()
 
@@ -55,7 +56,11 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 def automata_fitness(individual):
 
     initial_lattice = np.zeros(shape=(40,40))
-    initial_lattice[10][10] = 1
+    for i in range(10):
+        initial_lattice[random.randint(15, 20)][random.randint(15, 20)] = 1
+    # for i in range(13, 19):
+    #     for j in range(13, 18):
+    #         initial_lattice[i][j] = 1
 
     rules = [individual[0:9],individual[9:]]
     #import pdb; pdb.set_trace()
@@ -63,7 +68,7 @@ def automata_fitness(individual):
     max_t = 40
 
     dead_list = automaton.run(initial_lattice, rules, max_t)
-    fitness = evaluation.run(dead_list)
+    fitness = evaluation.run(dead_list, real_data)
 
     return ([fitness])
 

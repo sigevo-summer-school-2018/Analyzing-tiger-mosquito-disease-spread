@@ -1,1 +1,4 @@
 .vscode
+Code/__pycache__
+Code/*.png
+Code/*.zip
