@@ -56,9 +56,11 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 def automata_fitness(individual):
 
     initial_lattice = np.zeros(shape=(40,40))
-    for i in range(13, 19):
-        for j in range(13, 18):
-            initial_lattice[i][j] = 1
+    for i in range(10):
+        initial_lattice[random.randint(15, 20)][random.randint(15, 20)] = 1
+    # for i in range(13, 19):
+    #     for j in range(13, 18):
+    #         initial_lattice[i][j] = 1
 
     rules = [individual[0:9],individual[9:]]
     #import pdb; pdb.set_trace()
