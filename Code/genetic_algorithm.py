@@ -120,7 +120,7 @@ def main():
     g = 0
 
     # Begin the evolution
-    while g < 100:
+    while g < 10:
         # A new generation
         g = g + 1
         print("-- Generation %i --" % g)
